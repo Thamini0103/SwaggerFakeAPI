@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "a2feaa79-6d54-4fdf-bda8-557ebf40b9b4",
+		"name": "FakeRESTApi.Web V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33148758"
+	},
+	"item": [
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "ALL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Validar se o retornon é um array de objetos\r",
+									"//pm -> postman\r",
+									"//test -> teste que será realizado\r",
+									"//function -> ação que será realizada\r",
+									"\r",
+									"pm.test(\"Validar o retorno de um array de objetos\", () => {\r",
+									"    //postman -> espero (expected) response(em json) seja (to be) array (an array)\r",
+									"    pm.expect(pm.response.json()).to.be.an('array')\r",
+									"\r",
+									"})\r",
+									"\r",
+									"//Validar o contrato\r",
+									"\r",
+									"pm.test(\"Body is correct\", () => {\r",
+									"    //pm.response.to.have.body(\"response_body_string\");\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"array\",\r",
+									"  \"items\": [\r",
+									"    {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"title\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"dueDate\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"completed\": {\r",
+									"          \"type\": \"boolean\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"id\",\r",
+									"        \"title\",\r",
+									"        \"dueDate\",\r",
+									"        \"completed\"\r",
+									"      ]\r",
+									"    }\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', () => {\r",
+									"    //tv4  -> lib de validar schema \r",
+									"    //(data, schema) -> response, schema\r",
+									"    console.log(pm.response.json())\r",
+									"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"pm.test('Captura de ID', () => {\r",
+									"   var id = pm.response.json()\r",
+									"   console.log(id[0].id)\r",
+									"\r",
+									"   pm.globals.set(\"activitiesId\", id[0].id);\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURL}}/api/v1/Activities"
+					},
+					"response": []
+				},
+				{
+					"name": "ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o retorno de um objetos\", () => {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object')\r",
+									"\r",
+									"})\r",
+									"\r",
+									"//Validar o contrato\r",
+									"\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"title\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"dueDate\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"completed\": {\r",
+									"      \"type\": \"boolean\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"id\",\r",
+									"    \"title\",\r",
+									"    \"dueDate\",\r",
+									"    \"completed\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', () => {\r",
+									"    //tv4  -> lib de validar schema \r",
+									"    //(data, schema) -> response, schema\r",
+									"    console.log(pm.response.json())\r",
+									"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseURL}}/api/v1/Activities/{{activitiesId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "CRIAR ATIVIDADE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o retorno de um objetos\", () => {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object')\r",
+									"\r",
+									"})\r",
+									"\r",
+									"//Validar o contrato\r",
+									"\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"title\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"dueDate\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"completed\": {\r",
+									"      \"type\": \"boolean\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"id\",\r",
+									"    \"title\",\r",
+									"    \"dueDate\",\r",
+									"    \"completed\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', () => {\r",
+									"    //tv4  -> lib de validar schema \r",
+									"    //(data, schema) -> response, schema\r",
+									"    console.log(pm.response.json())\r",
+									"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"//postman validar que o meu id (obejto simples - (pm.response.json().id) possua id valor....\r",
+									"\r",
+									"pm.test('Validar ID da criação da atividade', () => {\r",
+									"    pm.expect(pm.response.json().id).to.be.equal(pm.iterationData.get(\"id\"))\r",
+									"\r",
+									"\r",
+									"    pm.globals.unset(\"activitiesId\"); //LIMPAR VARIAVEL GLOBAR PARA DEPOIS INSERIR NOVO VALOR\r",
+									"    pm.globals.set(\"activitiesId\", pm.response.json().id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{id}},\r\n  \"title\": \"{{title}}\",\r\n  \"dueDate\": \"2024-02-28T20:51:01.818Z\",\r\n  \"completed\": {{completed}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/api/v1/Activities"
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR ATIVIDADE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar o retorno de um objetos\", () => {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object')\r",
+									"\r",
+									"})\r",
+									"\r",
+									"//Validar o contrato\r",
+									"\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"title\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"dueDate\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"completed\": {\r",
+									"      \"type\": \"boolean\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"id\",\r",
+									"    \"title\",\r",
+									"    \"dueDate\",\r",
+									"    \"completed\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', () => {\r",
+									"    //tv4  -> lib de validar schema \r",
+									"    //(data, schema) -> response, schema\r",
+									"    console.log(pm.response.json())\r",
+									"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									"//postman validar que o meu id (obejto simples - (pm.response.json().id) possua id valor....\r",
+									"\r",
+									"pm.test('Validar alteração do parametro completed da atividade', () => {\r",
+									"    pm.expect(pm.response.json().completed).to.be.equal(true)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{activitiesId}},\r\n  \"title\": \"Testando criação de nova Activity\",\r\n  \"dueDate\": \"2024-02-28T20:51:01.818Z\",\r\n  \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseURL}}/api/v1/Activities/{{activitiesId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR ATIVIDADE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseURL}}/api/v1/Activities/{{activitiesId}}"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
