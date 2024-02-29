@@ -1,2 +1,2 @@
 # SwaggerFakeAPI
-Testes API Rest com postman usando fakeapi swagger
+Testes API Rest com postman usando fakeAPI swagger
